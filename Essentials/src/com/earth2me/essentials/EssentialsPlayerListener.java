@@ -505,6 +505,18 @@ public class EssentialsPlayerListener implements Listener
 	{
 		final User user = ess.getUser(event.getPlayer());
 		final String newWorld = event.getPlayer().getLocation().getWorld().getName();
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// AAM's modification start
+		final String oldWorld = event.getFrom().getName();
+		user.setBedSpawn(oldWorld, user.getBedSpawnLocation());
+		try {
+			Location loc = user.getBedSpawn(newWorld);
+			if (loc == null) user.setBedSpawnLocation(ess.getServer().getWorld(ess.getSettings().getBedSpawnWorldName(newWorld)).getSpawnLocation(), true);
+			else user.setBedSpawnLocation(loc, true);
+		} catch (Exception e) {
+		}
+		// AAM's modification end
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		user.setDisplayNick();
 		updateCompass(user);
 		if (ess.getSettings().getNoGodWorlds().contains(newWorld) && user.isGodModeEnabledRaw())
