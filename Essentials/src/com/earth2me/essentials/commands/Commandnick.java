@@ -10,6 +10,18 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 
+
+
+
+// AAM's modification start
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+// AAM's modification end
+
+
+
+
+
 public class Commandnick extends EssentialsLoopCommand
 {
 	public Commandnick()
@@ -83,10 +95,29 @@ public class Commandnick extends EssentialsLoopCommand
 		}
 	}
 
+
+
+
+
+
+
+	// AAM's modification
+	private boolean vaildPrintable(String nick) {
+		Pattern check = Pattern.compile("^\\p{Print}+$", Pattern.UNICODE_CHARACTER_CLASS);
+		Matcher match = check.matcher(nick);
+		return match.find();
+	}
+
+
+
+
+
+
+
 	private String formatNickname(final User user, final String nick) throws Exception
 	{
 		String newNick = user == null ? FormatUtil.replaceFormat(nick) : FormatUtil.formatString(user, "essentials.nick", nick);
-		if (!newNick.matches("^[a-zA-Z_0-9\u00a7]+$"))
+		if (!vaildPrintable(newNick)/* !newNick.matches("^[a-zA-Z_0-9\u00a7]+$") */) // AAM's modification
 		{
 			throw new Exception(_("nickNamesAlpha"));
 		}
