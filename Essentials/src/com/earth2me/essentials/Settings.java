@@ -539,9 +539,6 @@ public class Settings implements net.ess3.api.ISettings
 		isCustomJoinMessage = !customJoinMessage.equals("none");
 		customQuitMessage = _getCustomQuitMessage();
 		isCustomQuitMessage = !customQuitMessage.equals("none");
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		bedSpawnSharingWorlds = _getBedSpawnSharingWorlds(); // AAM's modification
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 	private List<Integer> itemSpawnBl = new ArrayList<Integer>();
 
@@ -1193,45 +1190,4 @@ public class Settings implements net.ess3.api.ISettings
 		long count = Runtime.getRuntime().maxMemory() / 1024 / 96;
 		return config.getInt("max-user-cache-count", (int)count);
 	}
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// AAM's modification
-	private ConfigurationSection bedSpawnSharingWorlds;
-	
-	public String getBedSpawnWorldName(String world)
-	{
-		for (String sharingWorld : bedSpawnSharingWorlds.getKeys(false)) {
-			if (bedSpawnSharingWorlds.getStringList(sharingWorld).contains(world)) return sharingWorld;
-		}
-		return world;
-	}
-
-	private ConfigurationSection _getBedSpawnSharingWorlds()
-	{
-		if (config.isConfigurationSection("bedspawnworlds"))
-		{
-			final ConfigurationSection section = config.getConfigurationSection("bedspawnworlds");
-			final ConfigurationSection newSection = new MemoryConfiguration();
-			for (String world : section.getKeys(false))
-			{
-				if (section.isList(world))
-				{
-					newSection.set(world, section.getStringList(world));
-				}
-			}
-			return newSection;
-		}
-		return null;
-	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

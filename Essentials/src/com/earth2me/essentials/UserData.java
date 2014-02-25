@@ -934,31 +934,4 @@ public abstract class UserData extends PlayerExtension implements IConf
 	{
 		config.save();
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// AAM's modification
-	public Location getBedSpawn(String world) throws Exception
-	{
-		return config.getLocation("bedspawns." + ess.getSettings().getBedSpawnWorldName(world), getServer());	
-	}
-
-	public void setBedSpawn(String world, Location loc)
-	{
-		if (loc == null) return;
-		config.setProperty("bedspawns." + ess.getSettings().getBedSpawnWorldName(world), loc);
-		config.save();
-	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
